@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="p-4 space-y-4">
+  <!-- 聚會資訊區塊 (約佔畫面上 1/3) -->
+  <div class="bg-white rounded-xl shadow-md p-6 space-y-4">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">{{ gathering.title }}</h2>
+
+    <div class="space-y-2 text-gray-700">
+      <div class="flex items-center">
+        <span class="w-16 font-semibold text-gray-600">時間：</span>
+        <span>{{ gathering.date }}</span>
+      </div>
+      <div class="flex items-center">
+        <span class="w-16 font-semibold text-gray-600">地點：</span>
+        <span>{{ gathering.location }}</span>
+      </div>
+      <div class="flex items-center">
+        <span class="w-16 font-semibold text-gray-600">主理：</span>
+        <span>{{ gathering.main_speaker }}</span>
+      </div>
+      <div class="flex items-center">
+        <span class="w-16 font-semibold text-gray-600">司會：</span>
+        <span>{{ gathering.moderator }}</span>
+      </div>
+      <div class="flex items-center">
+        <span class="w-16 font-semibold text-gray-600">司琴：</span>
+        <span>{{ gathering.pianist }}</span>
+      </div>
+    </div>
+
+    <!-- 參加狀態按鈕 -->
+    <div class="flex gap-4 mt-6">
+      <button
+        class="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition duration-200 flex items-center justify-center gap-2 shadow-sm">
+        <span class="text-xl">✓</span>
+        <span>參加</span>
+      </button>
+      <button
+        class="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg transition duration-200 flex items-center justify-center gap-2 shadow-sm">
+        <span class="text-xl">✗</span>
+        <span>不參加</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- TODO 區塊 (約佔畫面下 2/3) -->
+  <div class="bg-white rounded-xl shadow-md p-6">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">待辦事項</h3>
+
+    {% if todos %}
+    <div class="space-y-3">
+      {% for todo in todos %}
+      <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+        <input type="checkbox" {% if todo.completed %}checked{% endif %}
+          class="w-5 h-5 text-blue-600 rounded focus:ring-2 focus:ring-blue-500">
+        <span class="flex-1 {% if todo.completed %}line-through text-gray-400{% else %}text-gray-700{% endif %}">
+          {{ todo.title }}
+        </span>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-8">
+      <p class="text-gray-400">目前沒有待辦事項</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
